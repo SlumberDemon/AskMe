@@ -1,0 +1,20 @@
+v: 0
+app_name: AskMe
+icon: ./src/frontend/static/discovery.png
+micros:
+  - name: frontend
+    src: ./src/frontend
+    engine: svelte-kit
+    primary: true
+    public_routes:
+      - "/ask"
+      - "/_app/*"
+      - "/answered"
+      - "/api/public"
+      - "/favicon.png"
+      - "/api/questions"
+
+  - name: backend
+    src: ./src/backend
+    engine: python3.9
+    path: api

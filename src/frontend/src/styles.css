@@ -1,0 +1,67 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@200&display=swap');
+
+:root {
+  --text-main: #484645;
+	--text-sec: #7B7673;
+  --text-light: #AEAAA8;
+  --text-dark: #252424;
+	--back-main: #FBF9F7;
+	--back-sec: #F7F5F2;
+  --highlight-main: #EAE5DF;
+  --highlight-sec: #F8F4F1;
+  --extra-main: #F0EEEA;
+  --confirm: #A0EC9A;
+  --error: #EF4444;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--back-main);
+  background-image:  linear-gradient(#f5f5f5 8px, transparent 8px), linear-gradient(90deg, #f5f5f5 8px, transparent 8px), linear-gradient(#f5f5f5 4px, transparent 4px), linear-gradient(90deg, #f5f5f5 4px, #FBF9F7 4px);
+  background-size: 200px 200px, 200px 200px, 40px 40px, 40px 40px;
+  background-position: -8px -8px, -8px -8px, -4px -4px, -4px -4px;
+}
+
+a:link {
+  color: var(--text-light);
+  text-decoration: none;
+}
+
+a:visited {
+  color: var(--text-light);
+}
+
+a:active {
+  color: var(--text-main);
+} 
+
+a:hover {
+  color: var(--text-dark);
+}
+
+.nav-items {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  color: var(--text-sec);
+  gap: 10px;
+}
+
+.nav-ele:hover {
+  background-color: var(--highlight-main);
+}
+
+.nav-ele {
+  border-radius: 4px;
+  border: 2px solid var(--highlight-main);
+  cursor: pointer;
+  padding: 2px 6px;
+}
+
+.bg-pattern {
+  position: fixed;
+  background-color: #FBF9F7;
+  opacity: 0.1;
+  background-image:  linear-gradient(#7B7673 4px, transparent 4px), linear-gradient(to right, #7B7673 4px, #FBF9F7 4px);
+  background-size: 80px 80px;
+}
