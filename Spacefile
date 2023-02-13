@@ -11,6 +11,7 @@ micros:
       - "/_app/*"
       - "/answered"
       - "/api/public/*"
+      - "/api/question"
       - "/discovery.png"
       - "/api/questions"
 

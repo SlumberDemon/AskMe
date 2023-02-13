@@ -36,5 +36,3 @@
 {#if checkNewUser}
 	<GetStarted />
 {/if}
-
-<GetStarted />

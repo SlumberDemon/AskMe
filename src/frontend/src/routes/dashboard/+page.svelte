@@ -108,6 +108,10 @@
 			});
 		});
 	});
+
+	function openHelp() {
+		window.location.href = `/help`;
+	}
 </script>
 
 <nav>
@@ -235,6 +239,30 @@
 	</div>
 </div>
 
+<div class="footer">
+	<!-- svelte-ignore a11y-click-events-have-key-events -->
+	<div class="help-ico" on:click={openHelp}>
+		<svg
+			xmlns="http://www.w3.org/2000/svg"
+			width="24"
+			height="24"
+			viewBox="0 0 24 24"
+			fill="none"
+			stroke="currentColor"
+			stroke-width="2"
+			stroke-linecap="round"
+			stroke-linejoin="round"
+			class="feather feather-help-circle"
+			><circle cx="12" cy="12" r="10" /><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" /><line
+				x1="12"
+				y1="17"
+				x2="12.01"
+				y2="17"
+			/></svg
+		>
+	</div>
+</div>
+
 <style>
 	.page-name {
 		font-size: 25px;
@@ -301,5 +329,22 @@
 		border-color: var(--text-sec);
 		color: var(--text-main);
 		outline: none;
+	}
+
+	.footer {
+		justify-content: flex-end;
+		align-items: right;
+		align-self: right;
+		position: fixed;
+		display: flex;
+		height: 60px;
+		width: 100%;
+		bottom: 0;
+	}
+
+	.help-ico {
+		align-self: right;
+		cursor: pointer;
+		margin: 20px;
 	}
 </style>

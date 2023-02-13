@@ -1,9 +1,7 @@
 <script>
 	import { onMount } from 'svelte';
-	import { append } from 'svelte/internal';
 
 	let dataq = [];
-	let replyData = '';
 
 	onMount(async () => {
 		document.getElementById('ques').style.backgroundColor = 'var(--highlight-main)';
@@ -35,18 +33,6 @@
 			window.location.reload();
 		});
 	}
-
-	function clickResp(key) {
-		fetch(`/api/questions?key=${key}`, {
-			method: 'PATCH',
-			headers: {
-				'Content-type': 'application/json'
-			},
-			body: JSON.stringify({ reply: 'Hi!!', replied: true })
-		}).then(() => {
-			window.location.reload();
-		});
-	}
 </script>
 
 <nav>
@@ -64,47 +50,43 @@
 				{item['question']}
 			</div>
 			<div class="control">
-				{#if item['reply']}
-					<input
-						type="text"
-						class="reply"
-						placeholder="Type reply here"
-						maxlength="100"
-						on:keypress={() => {
-							console.log(self);
-							item.append({ value: self.value });
-						}}
-						value={item['reply']}
-					/>
-				{:else}
-					<input
-						type="text"
-						class="reply"
-						placeholder="Type reply here"
-						maxlength="100"
-						on:keypress={() => {
-							item.append({ value: self.value });
-						}}
-					/>
-				{/if}
-				<!-- svelte-ignore a11y-click-events-have-key-events -->
-				<div class="button send" on:click={clickResp(item['key'])}>
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						width="24"
-						height="24"
-						viewBox="0 0 24 24"
-						fill="none"
-						stroke="currentColor"
-						stroke-width="2"
-						stroke-linecap="round"
-						stroke-linejoin="round"
-						class="feather feather-send"
-					>
-						<line x1="22" y1="2" x2="11" y2="13" />
-						<polygon points="22 2 15 22 11 13 2 9 22 2" />
-					</svg>
-				</div>
+				<form method="POST">
+					{#if item['reply']}
+						<input
+							type="text"
+							class="reply"
+							placeholder="Type reply here"
+							maxlength="100"
+							value={item['reply']}
+							name="reply"
+						/>
+					{:else}
+						<input
+							type="text"
+							class="reply"
+							placeholder="Type reply here"
+							maxlength="100"
+							name="reply"
+						/>
+					{/if}
+					<button class="button" name="key" value={item['key']}>
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							width="24"
+							height="24"
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							stroke-width="2"
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							class="feather feather-send"
+						>
+							<line x1="22" y1="2" x2="11" y2="13" />
+							<polygon points="22 2 15 22 11 13 2 9 22 2" />
+						</svg>
+					</button>
+				</form>
 				<!-- svelte-ignore a11y-click-events-have-key-events -->
 				<div class="button" on:click={clickVis(item['hidden'], item['key'])}>
 					{#if item['hidden']}

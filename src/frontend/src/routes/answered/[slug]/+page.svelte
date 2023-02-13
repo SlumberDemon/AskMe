@@ -1,6 +1,5 @@
 <script>
 	import { onMount } from 'svelte';
-	export let data;
 
 	let route = '';
 
@@ -8,24 +7,22 @@
 		route = window.location.route;
 	});
 
+	console.log(location.pathname);
 	const repliedState = true;
 </script>
 
-<h1>{data.post.title}</h1>
-<div>{@html data.post.content}</div>
-
 <div class="answered">
+	<div class="notice">This page is under construction!</div>
+
 	<div class="card">
 		<div class="title">Question | IDHERE</div>
 		<div class="question">
-			<div class="text ques">
-				adgjnadgjkadgkbakdhgbhadbgkhabdghkbadkgbakjdgbkjadbgjkabdgkjbadgbakdgbkajdgbkjadbgkjabdgkjabdkgjbadj
-			</div>
+			<div class="text ques">Question Here</div>
 		</div>
 		<div class="answer">
 			<div class="text ans">
 				{#if repliedState}
-					adgjnadgjkadgkbakdhgbhadbgkhabdghkbadkgbakjdgbkjadbgjkabdgkjbadgbakdgbkajdgbkjadbgkjabdgkjabdkgjbadj
+					Answer Here
 				{:else}
 					This question has not been answered!
 				{/if}
