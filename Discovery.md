@@ -1,6 +1,9 @@
-Ask Me
-
-> The anonymous q&a app
+---
+title: "AskMe"
+tagline: "The anonymous q&a app"
+theme_color: "#125A5C"
+git: "https://github.com/SlumberDemon/askme"
+---
 
 Instructions
 
