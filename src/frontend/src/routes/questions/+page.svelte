@@ -7,18 +7,19 @@
 
 		const data = await fetch('/api/questions');
 		dataq = await data.json();
-
-		console.log(dataq);
-
-		delBtns = document.getElementsByClassName('delete');
-
-		for (let delBtn of delBtns) {
-			delBtn.addEventListener('click', () => {
-				fetch(`/api/questions?key=${delBtn.id.split('~')[1]}`, { method: 'DELETE' });
-				window.location.reload();
-			});
-		}
 	});
+
+	function clickDel(key) {
+		fetch(`/api/questions?key=${key}`, { method: 'DELETE' }).then(() => {
+			window.location.reload();
+		});
+	}
+
+	function clickVis(state, vis) {
+		fetch(`/api/questions?key=${key}`, { method: 'DELETE' }).then(() => {
+			window.location.reload();
+		});
+	}
 </script>
 
 <nav>
@@ -97,7 +98,8 @@
 						>
 					{/if}
 				</div>
-				<div class="button delete" id="d~{item['key']}">
+				<!-- svelte-ignore a11y-click-events-have-key-events -->
+				<div class="button delete" on:click={clickDel(item['key'])}>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="24"

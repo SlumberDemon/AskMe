@@ -1,25 +1,34 @@
 <script>
-	const repliedState = true;
+	import { onMount } from 'svelte';
+
+	let mainData = [];
+
+	onMount(async () => {
+		const data = await fetch('/api/public/questions');
+		mainData = await data.json();
+	});
 </script>
 
 <div class="answered">
 	<div class="title">Questions</div>
-	<div class="card">
-		<div class="question">
-			<div class="text ques">
-				adgjnadgjkadgkbakdhgbhadbgkhabdghkbadkgbakjdgbkjadbgjkabdgkjbadgbakdgbkajdgbkjadbgkjabdgkjabdkgjbadj
+	{#each mainData as item}
+		<div class="card">
+			<div class="question">
+				<div class="text ques">
+					{item['question']}
+				</div>
+			</div>
+			<div class="answer">
+				<div class="text ans">
+					{#if item['replied']}
+						{item['answer']}
+					{:else}
+						This question has not been answered!
+					{/if}
+				</div>
 			</div>
 		</div>
-		<div class="answer">
-			<div class="text ans">
-				{#if repliedState}
-					adgjnadgjkadgkbakdhgbhadbgkhabdghkbadkgbakjdgbkjadbgjkabdgkjbadgbakdgbkajdgbkjadbgkjabdgkjabdkgjbadj
-				{:else}
-					This question has not been answered!
-				{/if}
-			</div>
-		</div>
-	</div>
+	{/each}
 </div>
 
 <style>

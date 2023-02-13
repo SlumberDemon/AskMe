@@ -2,21 +2,26 @@
 	import { onMount } from 'svelte';
 
 	let mainData = [];
+	let displayName = '';
+	let displayImg = '';
+	let subState = '';
 
 	onMount(async () => {
-		questionData = document.getElementById('question');
-
-		const data = await fetch('/api/public');
+		const data = await fetch('/api/config');
 		mainData = await data.json();
-
-		const answeredBtn = document.getElementById('answered');
-
-		answeredBtn.addEventListener('click', () => {
-			window.location.href = `/answered`;
-		});
+		try {
+			displayName = mainData['display_name']['value'];
+			displayImg = mainData['display_image']['value'];
+			subState = mainData['submissions_state']['value'];
+		} catch {}
 	});
 
-	function sendBtn() {
+	function clickAns() {
+		window.location.href = `/answered`;
+	}
+
+	function clickSend(event) {
+		const questionData = event.getElementById('question');
 		if (questionData.value === '') {
 			questionData.placeholder = `Please enter a question`;
 			setTimeout(() => {
@@ -24,14 +29,13 @@
 			}, 800);
 			return;
 		}
-		questionData.value = ``;
 	}
 </script>
 
 <div class="ask">
-	{#if mainData['submissions_state']['value']}
-		<img src={mainData['display_image']['value']} alt="profile" class="picture" />
-		<div class="name">Ask {mainData['display_name']['value']}</div>
+	{#if subState}
+		<img src={displayImg} alt="profile" class="picture" />
+		<div class="name">Ask {displayName}</div>
 		<div class="asking">
 			<input
 				type="text"
@@ -41,7 +45,7 @@
 				maxlength="100"
 			/>
 			<!-- svelte-ignore a11y-click-events-have-key-events -->
-			<div id="send" class="button" on:click={sendBtn}>
+			<div id="send" class="button" on:click={clickSend}>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					width="24"
@@ -59,14 +63,12 @@
 				</svg>
 			</div>
 		</div>
-		<div class="button as" id="answered">Answered Questions</div>
-		<div class="info">
-			Built with <a href="https://deta.space/discovery/@sofa/askme">AskMe</a>, powered by
-			<a href="https://deta.space">Deta Space</a>
-		</div>
+		<!-- svelte-ignore a11y-click-events-have-key-events -->
+		<div class="button as" on:click={clickAns}>Answered Questions</div>
+		<div class="info">Preview Mode (data won't be sent)</div>
 	{:else}
 		<div class="message">
-			{mainData['display_name']['value']} is currently not answering new questions!
+			{displayName} is currently not answering new questions!
 		</div>
 	{/if}
 </div>
@@ -79,6 +81,18 @@
 		justify-content: center;
 		flex-direction: column;
 	}
+
+	.info {
+		margin: 10px;
+		position: fixed;
+		bottom: 0;
+	}
+
+	/*
+	#blur {
+		filter: blur(5px);
+	}
+	*/
 
 	.asking {
 		flex-direction: row;
@@ -136,20 +150,8 @@
 		outline: none;
 	}
 
-	.info {
-		margin: 10px;
-		position: fixed;
-		bottom: 0;
-	}
-
 	svg {
 		height: 15px;
 		width: 15px;
 	}
-
-	/*
-	#blur {
-		filter: blur(5px);
-	}
-	*/
 </style>

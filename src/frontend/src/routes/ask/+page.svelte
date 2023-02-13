@@ -2,16 +2,22 @@
 	import { onMount } from 'svelte';
 
 	let mainData = [];
+	let displayName = '';
+	let displayImg = '';
+	let subState = '';
 
 	onMount(async () => {
-		const data = await fetch('/api/public');
+		const data = await fetch('/api/public/config');
 		mainData = await data.json();
+		try {
+			displayName = mainData['display_name']['value'];
+			displayImg = mainData['display_image']['value'];
+			subState = mainData['submissions_state']['value'];
+		} catch {}
 	});
 
 	function clickAns() {
-		answeredBtn.addEventListener('click', () => {
-			window.location.href = `/answered`;
-		});
+		window.location.href = `/answered`;
 	}
 
 	function clickSend(event) {
@@ -30,9 +36,9 @@
 </script>
 
 <div class="ask">
-	{#if mainData['submissions_state']['value']}
-		<img src={mainData['display_image']['value']} alt="profile" class="picture" />
-		<div class="name">Ask {mainData['display_name']['value']}</div>
+	{#if subState}
+		<img src={displayImg} alt="profile" class="picture" />
+		<div class="name">Ask {displayName}</div>
 		<div class="asking">
 			<input
 				type="text"
@@ -41,7 +47,8 @@
 				placeholder="Ask your question here"
 				maxlength="100"
 			/>
-			<button id="send" class="button" on:click={clickSend}>
+			<!-- svelte-ignore a11y-click-events-have-key-events -->
+			<div id="send" class="button" on:click={clickSend}>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					width="24"
@@ -57,16 +64,17 @@
 					<line x1="22" y1="2" x2="11" y2="13" />
 					<polygon points="22 2 15 22 11 13 2 9 22 2" />
 				</svg>
-			</button>
+			</div>
 		</div>
-		<button class="button as" on:click={clickAns}>Answered Questions</button>
+		<!-- svelte-ignore a11y-click-events-have-key-events -->
+		<div class="button as" on:click={clickAns}>Answered Questions</div>
 		<div class="info">
 			Built with <a href="https://deta.space/discovery/@sofa/askme">AskMe</a>, powered by
 			<a href="https://deta.space">Deta Space</a>
 		</div>
 	{:else}
 		<div class="message">
-			{mainData['display_name']['value']} is currently not answering new questions!
+			{displayName} is currently not answering new questions!
 		</div>
 	{/if}
 </div>

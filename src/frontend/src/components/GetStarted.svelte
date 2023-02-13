@@ -1,41 +1,35 @@
 <script>
-	import { onMount } from 'svelte';
-
-	onMount(() => {
-		const startBtn = document.getElementById('start');
-
-		startBtn.addEventListener('click', () => {
-			fetch(`/api/config`, {
-				method: 'POST',
-				headers: {
-					'Content-type': 'application/json'
-				},
-				body: JSON.stringify({ value: false, key: 'user_state' })
-			});
-			fetch(`/api/config`, {
-				method: 'POST',
-				headers: {
-					'Content-type': 'application/json'
-				},
-				body: JSON.stringify({ value: false, key: 'submissions_state' })
-			});
-			fetch(`/api/config`, {
-				method: 'POST',
-				headers: {
-					'Content-type': 'application/json'
-				},
-				body: JSON.stringify({ value: '', key: 'display_name' })
-			});
-			fetch(`/api/config`, {
-				method: 'POST',
-				headers: {
-					'Content-type': 'application/json'
-				},
-				body: JSON.stringify({ value: '', key: 'display_image' })
-			});
-			window.location.href = `/dashboard`;
+	function start() {
+		fetch(`/api/config`, {
+			method: 'POST',
+			headers: {
+				'Content-type': 'application/json'
+			},
+			body: JSON.stringify({ value: false, key: 'user_state' })
 		});
-	});
+		fetch(`/api/config`, {
+			method: 'POST',
+			headers: {
+				'Content-type': 'application/json'
+			},
+			body: JSON.stringify({ value: false, key: 'submissions_state' })
+		});
+		fetch(`/api/config`, {
+			method: 'POST',
+			headers: {
+				'Content-type': 'application/json'
+			},
+			body: JSON.stringify({ value: '', key: 'display_name' })
+		});
+		fetch(`/api/config`, {
+			method: 'POST',
+			headers: {
+				'Content-type': 'application/json'
+			},
+			body: JSON.stringify({ value: '', key: 'display_image' })
+		});
+		window.location.href = `/dashboard`;
+	}
 </script>
 
 <div class="main">
@@ -48,7 +42,8 @@
 		class="video"
 		src="https://www.youtube.com/embed/tgbNymZ7vqY"
 	/>
-	<div id="start" class="button">Get Started</div>
+	<!-- svelte-ignore a11y-click-events-have-key-events -->
+	<div id="start" class="button" on:click={start}>Get Started</div>
 </div>
 
 <style>

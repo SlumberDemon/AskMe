@@ -42,6 +42,12 @@ async def post_config(request: fastapi.Request):
 # Questions
 
 
+@app.get("/question")
+async def get_question(key: str):
+    msg = questions.get(key)
+    return msg
+
+
 @app.get("/questions")
 async def get_questions():
     res = questions.fetch()
@@ -82,8 +88,8 @@ async def post_answer(key: str, answer: str):
 # Public
 
 
-@app.get("/public")
-async def get_public():
+@app.get("/public/config")
+async def get_public_config():
     sub = config.get("submissions_state")
     user = config.get("user_state")
     name = config.get("display_name")
@@ -94,3 +100,17 @@ async def get_public():
         "display_name": name,
         "display_image": image,
     }
+
+
+@app.get("/public/questions")
+async def get_nonehidden_questions():
+    res = questions.fetch()
+    items = res.items
+    while res.last:
+        res = questions.fetch(last=res.last)
+        items += res.items
+    data = []
+    for item in items:
+        if item["hidden"] == False:
+            data.append(item)
+    return data
