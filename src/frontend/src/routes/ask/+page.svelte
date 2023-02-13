@@ -6,6 +6,8 @@
 	let displayImg = '';
 	let subState = '';
 
+	let questionData = '';
+
 	onMount(async () => {
 		const data = await fetch('/api/public/config');
 		mainData = await data.json();
@@ -20,18 +22,15 @@
 		window.location.href = `/answered`;
 	}
 
-	function clickSend(event) {
-		const questionData = event.getElementById('question');
-		if (questionData.value === '') {
-			questionData.placeholder = `Please enter a question`;
+	function clickSend() {
+		if (questionData === '') {
+			questionData = `Please enter a question`;
 			setTimeout(() => {
-				questionData.placeholder = `Ask your question here`;
+				questionData = ``;
 			}, 800);
 			return;
 		}
-		fetch(`/api/questions?question=${questionData.value}`, { method: 'POST' }).then(
-			(questionData.value = ``)
-		);
+		fetch(`/api/questions?question=${questionData}`, { method: 'POST' }).then((questionData = ``));
 	}
 </script>
 
@@ -46,6 +45,7 @@
 				id="question"
 				placeholder="Ask your question here"
 				maxlength="100"
+				bind:value={questionData}
 			/>
 			<!-- svelte-ignore a11y-click-events-have-key-events -->
 			<div id="send" class="button" on:click={clickSend}>

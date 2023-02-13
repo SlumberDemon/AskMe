@@ -1,7 +1,7 @@
 <script>
 	import { onMount } from 'svelte';
 
-	let dataq = [{ question: 'hello' }];
+	let dataq = [];
 	onMount(async () => {
 		document.getElementById('ques').style.backgroundColor = 'var(--highlight-main)';
 
@@ -15,8 +15,20 @@
 		});
 	}
 
-	function clickVis(state, vis) {
-		fetch(`/api/questions?key=${key}`, { method: 'DELETE' }).then(() => {
+	function clickVis(state, key) {
+		let pushState = '';
+		if (state === true) {
+			pushState = false;
+		} else {
+			pushState = true;
+		}
+		fetch(`/api/questions?key=${key}`, {
+			method: 'PATCH',
+			headers: {
+				'Content-type': 'application/json'
+			},
+			body: JSON.stringify({ hidden: pushState })
+		}).then(() => {
 			window.location.reload();
 		});
 	}
@@ -61,7 +73,8 @@
 						<polygon points="22 2 15 22 11 13 2 9 22 2" />
 					</svg>
 				</div>
-				<div class="button hidden" id="h~{item['key']}">
+				<!-- svelte-ignore a11y-click-events-have-key-events -->
+				<div class="button" on:click={clickVis(item['hidden'], item['key'])}>
 					{#if item['hidden']}
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
@@ -99,7 +112,7 @@
 					{/if}
 				</div>
 				<!-- svelte-ignore a11y-click-events-have-key-events -->
-				<div class="button delete" on:click={clickDel(item['key'])}>
+				<div class="button" on:click={clickDel(item['key'])}>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="24"
