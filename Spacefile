@@ -9,10 +9,9 @@ micros:
     public_routes:
       - "/ask"
       - "/_app/*"
-      - "/icon.png"
       - "/answered"
-      - "/favicon.png"
       - "/api/public/*"
+      - "/discovery.png"
       - "/api/questions"
 
   - name: backend
