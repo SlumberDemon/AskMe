@@ -1,7 +1,10 @@
 <script>
 	import { onMount } from 'svelte';
+	import { append } from 'svelte/internal';
 
 	let dataq = [];
+	let replyData = '';
+
 	onMount(async () => {
 		document.getElementById('ques').style.backgroundColor = 'var(--highlight-main)';
 
@@ -32,6 +35,18 @@
 			window.location.reload();
 		});
 	}
+
+	function clickResp(key) {
+		fetch(`/api/questions?key=${key}`, {
+			method: 'PATCH',
+			headers: {
+				'Content-type': 'application/json'
+			},
+			body: JSON.stringify({ reply: 'Hi!!', replied: true })
+		}).then(() => {
+			window.location.reload();
+		});
+	}
 </script>
 
 <nav>
@@ -49,14 +64,31 @@
 				{item['question']}
 			</div>
 			<div class="control">
-				<input
-					type="text"
-					id="r~{item['key']}"
-					class="reply"
-					placeholder="Type reply here"
-					maxlength="100"
-				/>
-				<div class="button send" id="s~{item['key']}">
+				{#if item['reply']}
+					<input
+						type="text"
+						class="reply"
+						placeholder="Type reply here"
+						maxlength="100"
+						on:keypress={() => {
+							console.log(self);
+							item.append({ value: self.value });
+						}}
+						value={item['reply']}
+					/>
+				{:else}
+					<input
+						type="text"
+						class="reply"
+						placeholder="Type reply here"
+						maxlength="100"
+						on:keypress={() => {
+							item.append({ value: self.value });
+						}}
+					/>
+				{/if}
+				<!-- svelte-ignore a11y-click-events-have-key-events -->
+				<div class="button send" on:click={clickResp(item['key'])}>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="24"

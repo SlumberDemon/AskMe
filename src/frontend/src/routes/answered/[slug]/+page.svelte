@@ -1,5 +1,6 @@
 <script>
 	import { onMount } from 'svelte';
+	export let data;
 
 	let route = '';
 
