@@ -22,7 +22,7 @@
 		window.location.href = `/answered`;
 	}
 
-	function clickSend() {
+	async function clickSend() {
 		if (questionData === '') {
 			questionData = `Please enter a question`;
 			setTimeout(() => {
@@ -30,7 +30,14 @@
 			}, 800);
 			return;
 		}
-		fetch(`/api/questions?question=${questionData}`, { method: 'POST' }).then((questionData = ``));
+		fetch(`/api/questions?question=${questionData}`, { method: 'POST' }).then(async (r) => {
+			const data = await r.json();
+			let url = `${window.location.origin}/answered/${data['key']}`;
+			(questionData = ``),
+				navigator.clipboard.writeText(url).then(() => {
+					alert('Copied link to clipboard!');
+				});
+		});
 	}
 </script>
 
