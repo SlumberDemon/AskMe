@@ -1,12 +1,12 @@
 import { error } from '@sveltejs/kit';
-import { items } from '../data.js';
+import { posts } from '../data.js';
 
 export function load({ params }) {
-	const item = items.find((item) => item.slug === params.slug);
+	const post = posts.find((post) => post.slug === params.slug);
 
-	if (!item) throw error(404);
+	if (!post) throw error(404);
 
 	return {
-		item
+		post
 	};
 }

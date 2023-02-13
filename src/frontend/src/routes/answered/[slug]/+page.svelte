@@ -11,6 +11,9 @@
 	const repliedState = true;
 </script>
 
+<h1>{data.post.title}</h1>
+<div>{@html data.post.content}</div>
+
 <div class="answered">
 	<div class="card">
 		<div class="title">Question | IDHERE</div>
