@@ -1,4 +1,14 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@200&display=swap');
+@font-face {
+  font-family: 'Inter', sans-serif;
+  font-weight: 200;
+  src: url('/src/frontend/static/fonts/Inter-ExtraLight.woff')
+}
+
+@font-face {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  src: url('/src/frontend/static/fonts/Inter-Regular.woff')
+}
 
 :root {
   --text-main: #484645;

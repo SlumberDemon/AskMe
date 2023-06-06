@@ -18,4 +18,5 @@ micros:
   - name: backend
     src: ./src/backend
     engine: python3.9
+    run: uvicorn main:app
     path: api

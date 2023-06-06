@@ -1,9 +1,11 @@
 ---
-title: "AskMe"
-tagline: "The anonymous q&a app"
-theme_color: "#125A5C"
-git: "https://github.com/SlumberDemon/askme"
+app_name: AskMe
+title: AskMe
+tagline: The anonymous q&a app
+theme_color: '#125A5C'
+git: https://github.com/SlumberDemon/askme
 ---
+
 
 Instructions
 
@@ -16,3 +18,4 @@ Instructions
 7. You can hide questions from your answered page
 8. You can delete questions
 9. You can reply to questions (Type into the reply box and then press enter)
+
